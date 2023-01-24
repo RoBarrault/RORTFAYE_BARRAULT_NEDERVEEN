@@ -110,12 +110,12 @@ end
 function deltaplus(res::Reseau, u::Int64)
     if u < 1 || u > res.n
         println("Erreur : sommet non présent dans le graphe.")
-        return -1
+        return []
     end
     dp = []
     for b in res.Branches
         if b[1] == u
-            push!(dp, b[2])
+            push!(dp, b)
         end
     end
     return dp
@@ -124,12 +124,12 @@ end
 function deltaminus(res::Reseau, u::Int64)
     if u < 1 || u > res.n
         println("Erreur : sommet non présent dans le graphe.")
-        return -1
+        return []
     end
-    dm = Vector{Int64}()
+    dm = []
     for b in res.Branches
         if b[2] == u
-            push!(dm, b[1])
+            push!(dm, b)
         end
     end
     return dm
