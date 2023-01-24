@@ -1,7 +1,16 @@
 using JuMP
 using CPLEX
 
+include("Parser.jl")
+
+path = "instance_expl.txt"
+
+objet = Parse(path)
+println(objet)
+
+
 function Solve()
+
     m = Model(CPLEX.Optimizer)
 
     #Variables primales
@@ -52,5 +61,3 @@ function Solve()
     end
     println(m)
 end
-
-dualisation(path)
