@@ -15,17 +15,24 @@ function Solve(filenameInput::String)
 
     m = Model(CPLEX.Optimizer)
 
+    #Variables primales
+    @variable(m, x[a in G.Branches, k in 1:G.nb_pair], Bin)
+
     #Variables duales
     @variable(m, lambda[v in G.Vertices, k in 1:G.nb_pair] >= 0)
 
     #Variables pour linéarisation
     #@variable(m, z[a in A1, k in 1:nb_pair], Int)
 
+    #Contraintes primales
+    
+
     #Contraintes duales
     @constraint(m, [a1 in A1, k in 1:G.nb_pair], lambda[a1[2],k] - lambda[a1[1],k] <= cost(G,a1))
     @constraint(m, [a2 in A2, k in 1:G.nb_pair], lambda[a2[2],k] - lambda[a2[1],k] <= cost(G,a2))
 
     #Contraintes de dualité forte
+
 
     #Objectif
     @objective(m, Max, sum(lambda[G.pairs[k][2],k] - lambda[G.pairs[k][1],k] for k in 1:G.nb_pair))
