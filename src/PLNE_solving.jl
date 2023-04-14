@@ -1,5 +1,6 @@
 using JuMP
 using CPLEX
+using Gurobi
 
 include("Parser.jl")
 
@@ -14,7 +15,8 @@ function PLNE_solve(filenameInput::String, display::Bool)
 
     M = sum(cost(G,a) for a in G.Branches)
 
-    m = Model(CPLEX.Optimizer)
+    m = Model(Gurobi.Optimizer)
+    set_silent(m)
 
     #Variables primales
     @variable(m, x[a in G.Branches, k in 1:G.nb_pair], Bin)
@@ -58,7 +60,7 @@ function PLNE_solve(filenameInput::String, display::Bool)
     @objective(m, Max, sum(z[a1,k] for a1 in A1, k in 1:G.nb_pair))
 
     # Desactive les sorties de CPLEX (optionnel)
-    set_optimizer_attribute(m, "CPX_PARAM_SCRIND", 0)
+    #set_optimizer_attribute(m, "CPX_PARAM_SCRIND", 0)
 
     #Résolution
     optimize!(m)
@@ -111,3 +113,6 @@ function PLNE_solve(filenameInput::String, display::Bool)
         println("arc (", index[1],", ",index[2],") taxé à ", T_values[index])
     end
 end
+
+#filename = "taxe_grille_6x8.txt"
+#PLNE_solve(filename,true)

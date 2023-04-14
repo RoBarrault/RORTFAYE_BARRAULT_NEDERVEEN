@@ -9,7 +9,7 @@ mutable struct Reseau
     Branches        :: Vector{Tuple{Int64,Int64}}           #A
     Costs           :: Vector{Int64}                        #c_a : de la même taille que A
     Taxed_branches  :: Vector{Bool}                         #A1 (note : A2 = A\A1) : de la même taille que Branches, l'élément i est true Ssi l'arête i est dans A1
-    Taxes           :: Vector{Int64}                        #T_a : de la même taille que Branches, l'élément i est égal à la taxe sur l'arête i
+    Taxes           :: Vector{Float64}                      #T_a : de la même taille que Branches, l'élément i est égal à la taxe sur l'arête i
 
     Reseau() = new()
 end
@@ -93,6 +93,15 @@ function cost(res::Reseau, branch::Tuple{Int64,Int64})
         return -1
     end
     return res.Costs[ind]
+end
+
+function tax(res::Reseau, branch::Tuple{Int64,Int64})
+    ind = findfirst(b -> b == branch, res.Branches)
+    if isnothing(ind)
+        println("Erreur : cette branche ne fait pas partie du réseau tout court.")
+        return -1
+    end
+    return res.Taxes[ind]
 end
 
 function print(res::Reseau)
