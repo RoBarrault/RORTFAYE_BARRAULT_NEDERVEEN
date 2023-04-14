@@ -1,0 +1,11 @@
+Obtenir les résultats de la reformulation du PL :
+- Se rendre dans le fichier "PLNE_solving.jl"
+- Décommenter les lignes 117 et 118 du fichier
+- Remplacer la valeur de filename par le nom de l'instance souhaitée
+- Exécuter le fichier depuis la racine du projet
+
+Obtenir les résultats de la métaheuristique :
+- Se rendre dans le fichier "Heuristic.jl"
+- Décommenter les lignes 195 et 196 du fichier
+- Remplacer la valeur de filename par le nomre de l'instance souhaitée
+- Exécuter le fichier depuis la racine du projet
